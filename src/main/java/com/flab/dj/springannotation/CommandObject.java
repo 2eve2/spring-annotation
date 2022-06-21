@@ -1,6 +1,6 @@
 package com.flab.dj.springannotation;
 
-public class SaySomething {
+public class CommandObject {
     @Command("say")
     public void doSay(String word) {
         System.out.println("say " + word);

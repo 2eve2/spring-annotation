@@ -1,4 +1,4 @@
-package com.flab.dj.springannotation;
+package com.flab.dj;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
