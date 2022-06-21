@@ -9,7 +9,6 @@ import java.lang.reflect.InvocationTargetException;
 public class MyApp {
     public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Appconfig.class);
-
         RunAnnotation run = applicationContext.getBean("runAnnotation",RunAnnotation.class);
 
         run.printMethods();
