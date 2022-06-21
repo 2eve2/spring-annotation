@@ -29,7 +29,7 @@ public class RunCommand implements RunAnnotation {
     @Override
     public void printMethods(){
         for(String value : methodMap.keySet()){
-            System.out.println(value + " => " + methodMap.get(value));
+            System.out.println(value + " => " + methodMap.get(value).getName());
         }
     }
 
