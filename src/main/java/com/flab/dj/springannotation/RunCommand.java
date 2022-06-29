@@ -35,7 +35,6 @@ public class RunCommand{
         }
     }
 
-
     public String doCommand(String commandValue, String word) throws InvocationTargetException, IllegalAccessException {
         Method method = methodMap.get(commandValue);
 
