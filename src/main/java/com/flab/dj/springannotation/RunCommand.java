@@ -6,7 +6,9 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -17,7 +19,7 @@ public class RunCommand{
     final SomeObject object;
 
     @PostConstruct
-    public void init(){
+    public void init(){ //
         Method[] methods = object.getClass().getDeclaredMethods();
         for (Method m : methods){
             if(m.isAnnotationPresent((Command.class))){
@@ -26,6 +28,7 @@ public class RunCommand{
             }
         }
     }
+
     public void printCommands(){
         for(String k : methodMap.keySet()){
             System.out.println( k + " => " + methodMap.get(k).getName());
@@ -34,11 +37,11 @@ public class RunCommand{
 
 
     public String doCommand(String commandValue, String word) throws InvocationTargetException, IllegalAccessException {
-
         Method method = methodMap.get(commandValue);
 
-        if(methodMap.containsKey(commandValue)){
-            return (String) method.invoke(object,word);
+        if(method != null){
+            Object value = method.invoke(object, word);
+            return (String) value;
         }else{
             throw new IllegalAccessException("존재하지 않는 명령문입니다.");
         }

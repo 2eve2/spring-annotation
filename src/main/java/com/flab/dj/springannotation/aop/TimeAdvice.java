@@ -5,6 +5,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
+import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -16,15 +17,13 @@ import java.util.Arrays;
 @Aspect
 @Slf4j
 public class TimeAdvice {
-    @Around(value = "execution(* com.flab.dj.springannotation.RunCommand.*(..))")
-
+    @Around("execution(* com.flab.dj.springannotation.RunCommand.*(..))")
     public Object methodCallTime(ProceedingJoinPoint pjp) throws Throwable {
-        Instant start = Instant.now();
         log.info("<<[start] {}", pjp.getSignature().getName() + Arrays.toString(pjp.getArgs()));
 
-        Object result = pjp.proceed();
+        Instant start = Instant.now();
 
-        System.out.println("result=" + result); //
+        Object result = pjp.proceed();
 
         Instant end = Instant.now();
         log.info("[end]>> {}", Duration.between(start,end).toMillis() + "ms");

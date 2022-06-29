@@ -14,6 +14,5 @@ public class MyApp {
         run.printCommands();
         run.doCommand("say", "hello");
         run.doCommand("think","world");
-
     }
 }
