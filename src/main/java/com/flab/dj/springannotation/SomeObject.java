@@ -1,6 +1,9 @@
 package com.flab.dj.springannotation;
 
-public class CommandObject {
+import org.springframework.stereotype.Component;
+
+@Component
+public class SomeObject {
     @Command("say")
     public void doSay(String word) {
         System.out.println("say " + word);

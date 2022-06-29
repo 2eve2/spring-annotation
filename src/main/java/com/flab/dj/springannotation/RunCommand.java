@@ -1,23 +1,24 @@
 package com.flab.dj.springannotation;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
 import javax.annotation.PostConstruct;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class RunCommand implements RunAnnotation {
+@Component
+@RequiredArgsConstructor
+public class RunCommand{
 
     final Map<String, Method> methodMap = new LinkedHashMap<>();
-    final Object object;
-
-    public RunCommand(Object object) {
-        this.object = object;
-    }
+    final SomeObject object;
 
     @PostConstruct
     public void postConstruct(){
-        Method[] methods = object.getClass().getMethods();
+        Method[] methods = object.getClass().getDeclaredMethods();
         for (Method m : methods){
             if(m.isAnnotationPresent((Command.class))){
                 Command c = m.getAnnotation(Command.class);
@@ -25,20 +26,16 @@ public class RunCommand implements RunAnnotation {
             }
         }
     }
-
-    @Override
-    public void printMethods(){
+    public void printCommands(){
         for(String value : methodMap.keySet()){
             System.out.println(value + " => " + methodMap.get(value).getName());
         }
     }
 
-    @Override
-    public void doAction(String CommandValue, String word) throws InvocationTargetException, IllegalAccessException {
-        if(methodMap.containsKey(CommandValue)){
-            methodMap.get(CommandValue).invoke(object,word);
+
+    public void doCommand(String commandValue, String word) throws InvocationTargetException, IllegalAccessException {
+        if(methodMap.containsKey(commandValue)){
+            methodMap.get(commandValue).invoke(object,word);
         }
     }
-
-
 }
