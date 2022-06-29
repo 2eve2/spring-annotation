@@ -17,7 +17,7 @@ public class RunCommand{
     final SomeObject object;
 
     @PostConstruct
-    public void postConstruct(){
+    public void init(){
         Method[] methods = object.getClass().getDeclaredMethods();
         for (Method m : methods){
             if(m.isAnnotationPresent((Command.class))){
@@ -27,15 +27,20 @@ public class RunCommand{
         }
     }
     public void printCommands(){
-        for(String value : methodMap.keySet()){
-            System.out.println(value + " => " + methodMap.get(value).getName());
+        for(String k : methodMap.keySet()){
+            System.out.println( k + " => " + methodMap.get(k).getName());
         }
     }
 
 
-    public void doCommand(String commandValue, String word) throws InvocationTargetException, IllegalAccessException {
+    public String doCommand(String commandValue, String word) throws InvocationTargetException, IllegalAccessException {
+
+        Method method = methodMap.get(commandValue);
+
         if(methodMap.containsKey(commandValue)){
-            methodMap.get(commandValue).invoke(object,word);
+            return (String) method.invoke(object,word);
+        }else{
+            throw new IllegalAccessException("존재하지 않는 명령문입니다.");
         }
     }
 }
